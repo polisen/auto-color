@@ -6,15 +6,16 @@ import { getComplements } from 'utility/getComplementaryColors';
 import { usePalette } from 'color-thief-react';
 
 const StyledImage = styled.img`
-  width: 100%;
-  height: 100%;
+  width: 10em;
+  height: 20em;
+  transform: rotate(90deg);
 `;
 
 const Container = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  height: 100em;
+  /* height: 100em; */
 
   #imageSection {
     display: grid;
@@ -40,7 +41,7 @@ const Container = styled.div`
   }
   #nextPalette {
     width: 100%;
-    height: 100%;
+    height: 10em;
   }
 `;
 
@@ -50,16 +51,20 @@ const Color = styled.div<{ c: string }>`
   background-color: ${({ c }) => c || 'none'};
 `;
 const Colors = ({ data }: { data: string[] }) => (
-  <div id="colorsContainer">{data && data.map((c) => <Color key={c} c={c} />)}</div>
+  <div id="colorsContainer">
+    {data && data.map((c) => <Color key={c} c={c} />)}
+  </div>
 );
 
 const PaletteBar = ({
   url,
   setPalette,
-  colorCount = 4,
+  colorCount = 6,
   format = 'hslString',
 }: any) => {
-  const { data, loading, error } = usePalette(url, colorCount, format, { crossOrigin: 'anonymous' });
+  const { data, loading, error } = usePalette(url, colorCount, format, {
+    crossOrigin: 'anonymous',
+  });
   useEffect(() => {
     if (!loading && data) setPalette(data);
   }, [data, loading]);
@@ -103,10 +108,11 @@ export default function ImageSection({
           <StyledImage src={image} width="120" height="120" />
         </div>
         <PaletteBar url={image} setPalette={addToPalette} />
-      </div>
-      <div id="nextPalette">
-        <div id="paletteBarContainer">
-          <Colors data={Complements ?? []} />
+
+        <div id="nextPalette">
+          <div id="paletteBarContainer">
+            <Colors data={Complements ?? []} />
+          </div>
         </div>
       </div>
     </Container>
