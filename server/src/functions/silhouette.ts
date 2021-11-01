@@ -33,7 +33,7 @@ function silhouette_i(clusters: any[], i: number, point: number[]) {
 export default function silhouette(clusters: any[]) {
 	let sum = 0;
 	let count = 0;
-    if (!Array.isArray(clusters)) return;
+    if (!Array.isArray(clusters)) return null;
     clusters.forEach((cluster: number[][],i: number) => {
         cluster.forEach((point: number[]) => {
 			sum += silhouette_i(clusters, i, point);
