@@ -59,7 +59,7 @@ const Colors = ({ data }: { data: string[] }) => (
 const PaletteBar = ({
   url,
   setPalette,
-  colorCount = 6,
+  colorCount = 4,
   format = 'hslString',
 }: any) => {
   const { data, loading, error } = usePalette(url, colorCount, format, {
@@ -67,11 +67,12 @@ const PaletteBar = ({
   });
   useEffect(() => {
     if (!loading && data) setPalette(data);
-  }, [data, loading]);
 
-  useEffect(() => {
-    console.debug({ error });
-  }, [error]);
+    if (error) {
+      console.debug({ error });
+    }
+  }, [data, loading, error]);
+
   return (
     <div id="paletteBarContainer">
       <Colors data={data ?? []} />
@@ -87,7 +88,9 @@ export default function ImageSection({
   next: any;
 }) {
   const [Palette, setPalette]: any = useState([]);
-  const { data, loading } = usePalette(next, 4, 'hslString');
+  const { data, loading, error } = usePalette(next, 4, 'hslString', {
+    crossOrigin: 'anonymous',
+  });
   const [method] = useState('triad');
   const [Complements, setComplements]: any = useState([]);
   function addToPalette(colors: string[]) {
@@ -99,8 +102,19 @@ export default function ImageSection({
   }, [Palette]);
 
   useEffect(() => {
-    if (!loading && data) addToPalette(data);
-  }, [data, loading]);
+    if (!loading && data) {
+      addToPalette(data);
+    }
+
+    if (error) {
+      console.debug({ error });
+    }
+  }, [data, loading, error]);
+
+  useEffect(() => {
+    console.debug('images', { image, next });
+  }, [image, next]);
+
   return (
     <Container>
       <div id="imageSection">

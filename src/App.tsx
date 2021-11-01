@@ -1,7 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 import styled from 'styled-components';
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import images from 'assets/images';
 import ImageSection from 'components/ImageSection';
 
@@ -41,6 +41,10 @@ const Something = styled.div`
 
 const Shuffle = styled.div`
   grid-area: button;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 `;
 
 const HeaderArea = ({ handlers }: { handlers: any }) => (
@@ -48,16 +52,16 @@ const HeaderArea = ({ handlers }: { handlers: any }) => (
     <Logo>
       <h1>AutoColor v1</h1>
     </Logo>
-    <Headline>f</Headline>
+    <Headline />
     <Shuffle>
       <button type="button" onClick={handlers.shuffleImages}>
         Shuffle Images
       </button>
-      <button type="button" onClick={handlers.shuffleImages}>
+      <button type="button" onClick={handlers.regeneratePalettes}>
         Regenerate Palette
       </button>
     </Shuffle>
-    <Something>e</Something>
+    <Something />
   </HeaderDiv>
 );
 
@@ -70,6 +74,10 @@ export default function Home() {
   function regeneratePalettes() {
     setImages(new Array(...Images));
   }
+
+  useEffect(() => {
+    console.debug({ Images });
+  }, [Images]);
   return (
     <Container>
       <HeaderArea handlers={{ shuffleImages, regeneratePalettes }} />
