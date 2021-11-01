@@ -13,6 +13,7 @@ app.post("/colors", (req: Request, res: Response) => {
 
   const complements = getComplements(hslStrings, method);
 
+  console.log(complements);
 
   res.status(200).send(complements);
 });
