@@ -1,17 +1,19 @@
-import express, {Request, Response} from 'express';
+import express, { Request, Response } from "express";
+import { getComplements } from "./functions/getComplementaryColors";
+export const app = express();
 
-export const app = express()
+app.use(express.json());
 
+import cors from "cors";
+app.use(cors({ origin: true }));
 
+app.post("/colors", (req: Request, res: Response) => {
+  const { hslStrings, method }: { hslStrings: string[]; method: string } =
+    req.body;
 
-app.use( express.json())
+  const complements = getComplements(hslStrings, method);
 
-import cors from 'cors';
-app.use( cors({origin: true}))
+  console.log(complements);
 
-app.post('/test', (req: Request, res: Response) => {
-
-    // const colorString: string[] = req.body.amount;
-
-    res.status(200).send({})
-})
+  res.status(200).send(complements);
+});

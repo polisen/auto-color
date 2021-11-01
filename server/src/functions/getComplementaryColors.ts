@@ -1,5 +1,5 @@
 import chroma from 'chroma-js';
-import KMeans from 'utility/3d_Kmeans'
+import KMeans from './3d_Kmeans'
 function mod(x: number, m: number) {
     return (x%m + m)%m;
 }
